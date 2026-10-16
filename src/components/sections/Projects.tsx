@@ -25,7 +25,7 @@ export default function Projects() {
           viewCode: labels.viewCode,
           opensInNewTab: labels.opensInNewTab,
           showDetails: labels.showDetails,
-          hideDetails: labels.hideDetails,
+          closeDetails: labels.closeDetails,
           highlights: labels.highlights,
           techStack: labels.techStack,
         }}

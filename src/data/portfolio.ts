@@ -25,6 +25,7 @@ export type SectionId = (typeof sections)[number]["id"];
 
 /** Owner-supplied section art in public/images (filenames are case-sensitive on the server). */
 export const media = {
+  home: { src: "/images/Arc Reactor.jpeg", width: 736, height: 1273 },
   skills: { src: "/images/Thor.jpeg", width: 736, height: 1554 },
   projects: { src: "/images/Hulk.jpeg", width: 736, height: 1308 },
   leadership: { src: "/images/Captain.jpeg", width: 736, height: 1308 },
@@ -47,7 +48,7 @@ export const labels = {
   filterInProgress: "In progress",
   viewCode: "View on GitHub",
   showDetails: "View details",
-  hideDetails: "Back",
+  closeDetails: "Close",
   highlights: "Highlights",
   techStack: "Tech stack",
   opensInNewTab: "opens in a new tab",
@@ -58,6 +59,7 @@ export const labels = {
   github: "GitHub",
   linkedin: "LinkedIn",
   backToTop: "Back to top",
+  sparkHint: "Click and drag to cast sparks",
   notFoundTitle: "Page not found",
   notFoundBody: "This page doesn't exist in this universe.",
   backHome: "Back to home",

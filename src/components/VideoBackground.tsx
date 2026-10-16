@@ -10,7 +10,17 @@ type Props = {
   /** Two accent colours for the animated gradient shown behind (or instead of) the video. */
   glow: [string, string];
   /** Optional background art from public/, shown blurred with a parallax drift. */
-  image?: string;
+  image?: BackgroundArt;
+};
+
+export type BackgroundArt = {
+  src: string;
+  /** Frame classes, e.g. to anchor the art to one side. */
+  frameClassName?: string;
+  /** Image classes, e.g. its opacity. */
+  className?: string;
+  /** Load eagerly (above-the-fold art). */
+  priority?: boolean;
 };
 
 /**
@@ -35,7 +45,7 @@ export default function VideoBackground({ src, poster, glow, image }: Props) {
         style={{ background: `radial-gradient(circle, ${glow[1]} 0%, transparent 60%)` }}
       />
 
-      {image && <ParallaxImage src={image} />}
+      {image && <ParallaxImage {...image} />}
 
       {sources.length > 0 && <BackgroundVideo sources={sources} poster={posterSrc} />}
 

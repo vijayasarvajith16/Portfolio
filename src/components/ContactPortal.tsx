@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { useAnimate, useInView, useReducedMotion } from "framer-motion";
+import MysticSigil from "./emblems/MysticSigil";
 
 export type ContactLink = {
   key: string;
@@ -17,8 +18,20 @@ type Props = {
   links: ContactLink[];
   art: { src: string; width: number; height: number };
   resume?: { href: string; fileName: string; label: string };
-  labels: { list: string; opensInNewTab: string };
+  labels: { list: string; opensInNewTab: string; sparkHint: string };
 };
+
+// Golden motes placed evenly around the portal rim (deterministic, so server and client match).
+const MOTES = Array.from({ length: 16 }, (_, i) => {
+  const a = (i / 16) * Math.PI * 2;
+  const r = 44 + (i % 3) * 4;
+  return {
+    left: `${(50 + r * Math.cos(a)).toFixed(1)}%`,
+    top: `${(50 + r * Math.sin(a)).toFixed(1)}%`,
+    delay: `${((i * 0.37) % 5).toFixed(2)}s`,
+    duration: `${4 + (i % 4) * 0.6}s`,
+  };
+});
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -80,6 +93,14 @@ export default function ContactPortal({ links, art, resume, labels }: Props) {
           aria-hidden
           className="pointer-events-none relative mx-auto mb-8 size-64 opacity-0 mix-blend-screen sm:size-72 lg:absolute lg:left-1/2 lg:top-1/2 lg:mb-0 lg:-ml-[170px] lg:-mt-[170px] lg:size-[340px]"
         >
+          <MysticSigil className="absolute -inset-[16%] opacity-80" />
+          {MOTES.map((m, i) => (
+            <span
+              key={i}
+              className="absolute size-1 rounded-full bg-gold opacity-0 shadow-[0_0_8px_2px_rgb(240_180_41/0.7)] motion-safe:animate-mote"
+              style={{ left: m.left, top: m.top, animationDelay: m.delay, animationDuration: m.duration }}
+            />
+          ))}
           {/* Circular fade + extra contrast so the art's near-black background fully drops out. */}
           <div
             className="absolute inset-0 motion-safe:animate-spin-slow"
@@ -109,12 +130,13 @@ export default function ContactPortal({ links, art, resume, labels }: Props) {
           aria-label={labels.list}
           className="relative grid gap-3 lg:min-h-[340px] lg:grid-cols-2 lg:content-center lg:gap-x-[400px] lg:gap-y-8"
         >
-          {links.map((link) => (
+          {links.map((link, i) => (
             <li key={link.key} data-emerge data-reveal className="opacity-0">
               <a
+                style={{ animationDelay: `${i * -1.5}s` }}
                 href={link.href}
                 {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-line bg-surface/80 p-4 backdrop-blur-sm transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-purple/70 focus-visible:border-purple/70"
+                className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-line bg-surface/80 p-4 backdrop-blur-sm transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-gold/70 focus-visible:border-gold/70 motion-safe:animate-float"
               >
                 <span
                   aria-hidden
@@ -159,6 +181,8 @@ export default function ContactPortal({ links, art, resume, labels }: Props) {
           </a>
         </div>
       )}
+
+      <p className="mt-4 hidden text-center text-xs text-muted [@media(hover:hover)]:block">{labels.sparkHint}</p>
     </div>
   );
 }

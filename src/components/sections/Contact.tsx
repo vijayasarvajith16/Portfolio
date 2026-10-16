@@ -3,6 +3,7 @@ import { publicFileExists, resumeFileName } from "@/lib/files";
 import { sectionMeta } from "@/lib/sections";
 import SectionShell from "../SectionShell";
 import ContactPortal from "../ContactPortal";
+import SparkCanvas from "../SparkCanvas";
 import SectionTitle from "../ui/SectionTitle";
 
 const withoutProtocol = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
@@ -66,8 +67,13 @@ export default function Contact() {
               ? { href: profile.resume, fileName: resumeFileName(profile.name), label: labels.downloadResume }
               : undefined
           }
-          labels={{ list: labels.contactLinks, opensInNewTab: labels.opensInNewTab }}
+          labels={{
+            list: labels.contactLinks,
+            opensInNewTab: labels.opensInNewTab,
+            sparkHint: labels.sparkHint,
+          }}
         />
+        <SparkCanvas />
       </SectionShell>
 
       <footer className="border-t border-line/70 bg-ink">

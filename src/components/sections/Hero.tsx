@@ -1,4 +1,4 @@
-import { education, labels, profile, skillGroups } from "@/data/portfolio";
+import { education, labels, media, profile, skillGroups } from "@/data/portfolio";
 import { publicFileExists, resumeFileName } from "@/lib/files";
 import SectionShell from "../SectionShell";
 import SnapEducation from "../SnapEducation";
@@ -19,6 +19,15 @@ export default function Hero() {
     <SectionShell
       id="home"
       labelledBy="home-title"
+      image={{
+        src: media.home.src,
+        priority: true,
+        // Full-bleed and dim on mobile. On desktop it is the right-hand visual: one screen
+        // tall, nearly sharp, with a soft oval fade into the page.
+        frameClassName:
+          "inset-0 lg:bottom-auto lg:left-[38%] lg:h-svh lg:[mask-image:radial-gradient(ellipse_at_55%_50%,#000_35%,transparent_72%)]",
+        className: "opacity-35 lg:opacity-80 lg:blur-[1px]",
+      }}
       className="flex min-h-svh flex-col justify-center pt-[calc(var(--nav-height)+3rem)]"
     >
       <div className="grid items-center gap-10 lg:grid-cols-[1.5fr_1fr]">
@@ -71,9 +80,6 @@ export default function Hero() {
           </Rise>
         </div>
 
-        <Rise delay={0.4} className="hidden justify-center lg:flex">
-          <ArcReactor className="size-72 xl:size-80" />
-        </Rise>
       </div>
 
       <Rise delay={0.8}>
