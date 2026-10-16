@@ -24,6 +24,22 @@
   --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
   --animate-flash: flash 5s linear infinite;
   --animate-ring-pulse: ring-pulse 2.4s ease-out infinite;
+  --animate-portal-outer: orbit 16s linear infinite;
+  --animate-portal-middle: orbit 9s linear infinite reverse;
+  --animate-portal-inner: orbit 5s linear infinite;
+  --animate-portal-core: portal-core 3s ease-in-out infinite;
+
+  @keyframes portal-core {
+    0%,
+    100% {
+      transform: scale(0.92);
+      opacity: 0.75;
+    }
+    50% {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+  }
 
   @keyframes ring-pulse {
     0% {

@@ -40,6 +40,12 @@ export const labels = {
   viewCode: "View on GitHub",
   opensInNewTab: "opens in a new tab",
   softSkills: "Soft skills",
+  contactLinks: "Contact links",
+  email: "Email",
+  phone: "Phone",
+  github: "GitHub",
+  linkedin: "LinkedIn",
+  backToTop: "Back to top",
 };
 
 export const education = [

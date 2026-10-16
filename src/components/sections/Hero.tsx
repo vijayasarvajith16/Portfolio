@@ -1,5 +1,5 @@
 import { education, labels, profile, skillGroups } from "@/data/portfolio";
-import { publicFileExists } from "@/lib/files";
+import { publicFileExists, resumeFileName } from "@/lib/files";
 import SectionShell from "../SectionShell";
 import SnapEducation from "../SnapEducation";
 import ArcReactor from "../emblems/ArcReactor";
@@ -53,7 +53,7 @@ export default function Hero() {
               {hasResume && (
                 <a
                   href={profile.resume}
-                  download
+                  download={resumeFileName(profile.name)}
                   className={`${buttonBase} border border-line bg-surface/70 text-text hover:border-gold/60`}
                 >
                   {labels.downloadResume}

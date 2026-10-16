@@ -1,10 +1,9 @@
+import { ringMask as ring } from "@/lib/css";
+
 type Props = {
   /** Sets the size, e.g. "size-64". Every layer scales with it. */
   className?: string;
 };
-
-const ring = (inner: number, outer: number) =>
-  `radial-gradient(circle closest-side, transparent ${inner}%, #000 ${inner + 1}%, #000 ${outer}%, transparent ${outer + 1}%)`;
 
 /** Iron Man touch: a CSS arc reactor. Coils turn slowly, the core pulses, and it glows brighter on hover. */
 export default function ArcReactor({ className = "size-64" }: Props) {
