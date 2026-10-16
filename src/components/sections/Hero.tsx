@@ -4,7 +4,7 @@ import SectionShell from "../SectionShell";
 import SnapEducation from "../SnapEducation";
 import ArcReactor from "../emblems/ArcReactor";
 import AnimatedName from "../motion/AnimatedName";
-import Reveal from "../motion/Reveal";
+import Rise from "../motion/Rise";
 import Chip from "../ui/Chip";
 
 const coreSkills = skillGroups.flatMap((group) => group.items.slice(0, 2));
@@ -23,9 +23,9 @@ export default function Hero() {
     >
       <div className="grid items-center gap-10 lg:grid-cols-[1.5fr_1fr]">
         <div>
-          <Reveal className="mb-6 lg:hidden">
+          <Rise className="mb-6 lg:hidden">
             <ArcReactor className="size-16" />
-          </Reveal>
+          </Rise>
 
           <AnimatedName
             id="home-title"
@@ -33,7 +33,7 @@ export default function Hero() {
             className="font-name text-[clamp(2.4rem,7.5vw,5rem)] leading-[1.05] tracking-tight text-text"
           />
 
-          <Reveal delay={0.7}>
+          <Rise delay={0.5}>
             <p className="mt-5 text-lg font-semibold text-text sm:text-xl">{profile.department}</p>
             <p className="text-muted">{profile.college}</p>
 
@@ -68,15 +68,15 @@ export default function Hero() {
                 </li>
               ))}
             </ul>
-          </Reveal>
+          </Rise>
         </div>
 
-        <Reveal delay={0.4} className="hidden justify-center lg:flex">
+        <Rise delay={0.4} className="hidden justify-center lg:flex">
           <ArcReactor className="size-72 xl:size-80" />
-        </Reveal>
+        </Rise>
       </div>
 
-      <Reveal delay={1}>
+      <Rise delay={0.8}>
         <SnapEducation
           items={education}
           labels={{
@@ -86,7 +86,7 @@ export default function Hero() {
             hint: labels.snapHint,
           }}
         />
-      </Reveal>
+      </Rise>
     </SectionShell>
   );
 }

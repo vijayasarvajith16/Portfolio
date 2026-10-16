@@ -11,6 +11,7 @@ Build plan for Vijaya Sarvajith K's portfolio. The standing rules live in `CLAUD
 - **Links:** repo URLs taken from the local Git remotes. Smart Farming Agent is the FarmEase repo.
 - **Typography (owner's choice):** Barlow Condensed 700 for section titles, Montserrat 800 for the name, Space Grotesk 600 for project titles, Inter for body text (variable font so true medium and semibold weights load), JetBrains Mono for contact details. This replaces Impact/Anton.
 - **UI labels** (button and label text such as "Snap" or "Download Resume") live in `labels` in `portfolio.ts`, so no text is hardcoded in components.
+- **LinkedIn:** the owner chose to keep the `l1nk.dev` short link as given.
 - **The resume is the source of truth** when the data file and the resume disagree.
 
 ## Section map
@@ -58,5 +59,4 @@ The owner pushes to GitHub and imports the repo into Vercel. The live URL then g
 
 ## Open items
 
-- Replace the LinkedIn short link (`l1nk.dev`, which redirects through a third-party shortener page) with the direct `linkedin.com/in/...` URL.
 - Optional: abstract video loops. Put the source files in `raw/` and they get encoded with ffmpeg into `public/videos/`.

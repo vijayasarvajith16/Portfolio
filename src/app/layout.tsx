@@ -14,8 +14,13 @@ const name = Montserrat({ subsets: ["latin"], weight: "800", variable: "--font-m
 const heading = Space_Grotesk({ subsets: ["latin"], weight: "600", variable: "--font-space-grotesk" });
 // Body text (variable font, so medium and semibold UI labels render true weights)
 const body = Inter({ subsets: ["latin"], variable: "--font-inter" });
-// Contact details
-const mono = JetBrains_Mono({ subsets: ["latin"], weight: "400", variable: "--font-jetbrains" });
+// Contact details (not preloaded: it is only used far below the fold)
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-jetbrains",
+  preload: false,
+});
 
 // The share image comes from opengraph-image.tsx; metadataBase makes its URL absolute.
 export const metadata: Metadata = {
