@@ -21,6 +21,28 @@
   --animate-spin-slow: orbit 28s linear infinite;
   --animate-spin-reverse: orbit 18s linear infinite reverse;
   --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
+  --animate-flash: flash 5s linear infinite;
+
+  /* Lightning: dark for most of the cycle, then a double strike. */
+  @keyframes flash {
+    0%,
+    86%,
+    100% {
+      opacity: 0;
+    }
+    88% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 0.25;
+    }
+    92% {
+      opacity: 0.9;
+    }
+    95% {
+      opacity: 0;
+    }
+  }
 
   @keyframes orbit {
     to {
