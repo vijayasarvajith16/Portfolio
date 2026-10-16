@@ -33,6 +33,12 @@ export const labels = {
   snapHint: "Half the cards vanish. They come back in 4 seconds.",
   viewProjects: "View Projects",
   downloadResume: "Download Resume",
+  projectFilter: "Filter projects by status",
+  filterAll: "All",
+  filterComplete: "Complete",
+  filterInProgress: "In progress",
+  viewCode: "View on GitHub",
+  opensInNewTab: "opens in a new tab",
 };
 
 export const education = [
