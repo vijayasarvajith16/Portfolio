@@ -11,7 +11,7 @@ Build plan for Vijaya Sarvajith K's portfolio. The standing rules live in `CLAUD
 - **Links:** repo URLs taken from the local Git remotes. Smart Farming Agent is the FarmEase repo.
 - **Typography (owner's choice):** Barlow Condensed 700 for section titles, Montserrat 800 for the name, Space Grotesk 600 for project titles, Inter for body text (variable font so true medium and semibold weights load), JetBrains Mono for contact details. This replaces Impact/Anton.
 - **UI labels** (button and label text such as "Snap" or "Download Resume") live in `labels` in `portfolio.ts`, so no text is hardcoded in components.
-- **Section art (owner's decision, reversing the earlier "no Marvel media" choice):** Skills shows `public/images/Thor.jpeg` with skills orbiting it in 3D. Leadership shows `public/images/Captain.jpeg` as a scroll-linked 3D panel. Both also appear as blurred parallax backgrounds. The owner was told these are third-party Marvel-character images and that the copyright row of the quality gate no longer passes as written.
+- **Section art (owner's decision, reversing the earlier "no Marvel media" choice):** Skills shows `public/images/Thor.jpeg` with skills orbiting it in 3D. Leadership shows `public/images/Captain.jpeg` as a scroll-linked 3D panel. Both also appear as blurred parallax backgrounds. Later the same day: Projects got `Hulk.jpeg` as its background, and projects became 3D flip flashcards (front: summary; click: full details). Contact got `portal.jpeg` as a spark portal that the contact cards fly out of. The owner was told these are third-party Marvel-character images and that the copyright row of the quality gate no longer passes as written.
 - **LinkedIn:** the owner chose to keep the `l1nk.dev` short link as given.
 - **The resume is the source of truth** when the data file and the resume disagree.
 
@@ -48,7 +48,7 @@ Every phase ends with `npm run lint`, `npm run build`, a commit, and a stop for 
 | Mobile | 375px | No horizontal scroll |
 | Links | Click each | Correct targets |
 | Video weight | Network tab | Each under 5 MB |
-| Copyright | Review media | No Marvel film footage or stills; character art limited to the two owner-supplied images (owner's accepted risk) |
+| Copyright | Review media | No Marvel film footage or stills; character art limited to the owner-supplied images in `public/images/` (owner's accepted risk) |
 
 ## Site URL
 

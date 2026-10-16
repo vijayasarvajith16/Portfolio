@@ -1,9 +1,8 @@
-import { labels, profile } from "@/data/portfolio";
+import { labels, media, profile } from "@/data/portfolio";
 import { publicFileExists, resumeFileName } from "@/lib/files";
 import { sectionMeta } from "@/lib/sections";
 import SectionShell from "../SectionShell";
-import Portal from "../emblems/Portal";
-import Reveal from "../motion/Reveal";
+import ContactPortal from "../ContactPortal";
 import SectionTitle from "../ui/SectionTitle";
 
 const withoutProtocol = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
@@ -58,62 +57,17 @@ export default function Contact() {
   return (
     <>
       <SectionShell id="contact" labelledBy="contact-title">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.3fr_1fr]">
-          <div>
-            <SectionTitle id="contact-title" title={label} accent={accent} />
-
-            <ul aria-label={labels.contactLinks} className="grid max-w-lg gap-3">
-              {links.map((link) => (
-                <li key={link.key}>
-                  <a
-                    href={link.href}
-                    {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-line bg-surface/75 p-4 backdrop-blur-sm transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-purple/70 focus-visible:border-purple/70"
-                  >
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
-                      style={{
-                        background:
-                          "radial-gradient(circle at 15% 50%, color-mix(in srgb, var(--color-purple) 28%, transparent), transparent 70%)",
-                      }}
-                    />
-                    <span
-                      aria-hidden
-                      className="relative grid size-11 shrink-0 place-items-center rounded-xl border border-purple/40 bg-ink/60 p-2.5 text-gold"
-                    >
-                      {icons[link.key]}
-                    </span>
-                    <span className="relative min-w-0">
-                      <span className="block text-xs font-semibold uppercase tracking-widest text-muted">
-                        {link.label}
-                      </span>
-                      <span className="block break-all font-mono text-sm text-text">{link.value}</span>
-                      {link.external && <span className="sr-only"> ({labels.opensInNewTab})</span>}
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-
-            {hasResume && (
-              <a
-                href={profile.resume}
-                download={resumeFileName(profile.name)}
-                className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 font-semibold text-ink shadow-lg shadow-gold/20 transition-transform hover:-translate-y-0.5"
-              >
-                <svg aria-hidden viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14" />
-                </svg>
-                {labels.downloadResume}
-              </a>
-            )}
-          </div>
-
-          <Reveal inView className="flex justify-center">
-            <Portal className="size-56 sm:size-72 xl:size-80" />
-          </Reveal>
-        </div>
+        <SectionTitle id="contact-title" title={label} accent={accent} />
+        <ContactPortal
+          links={links.map((link) => ({ ...link, icon: icons[link.key] }))}
+          art={media.contact}
+          resume={
+            hasResume
+              ? { href: profile.resume, fileName: resumeFileName(profile.name), label: labels.downloadResume }
+              : undefined
+          }
+          labels={{ list: labels.contactLinks, opensInNewTab: labels.opensInNewTab }}
+        />
       </SectionShell>
 
       <footer className="border-t border-line/70 bg-ink">

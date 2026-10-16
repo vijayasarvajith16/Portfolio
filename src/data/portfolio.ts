@@ -26,7 +26,9 @@ export type SectionId = (typeof sections)[number]["id"];
 /** Owner-supplied section art in public/images (filenames are case-sensitive on the server). */
 export const media = {
   skills: { src: "/images/Thor.jpeg", width: 736, height: 1554 },
+  projects: { src: "/images/Hulk.jpeg", width: 736, height: 1308 },
   leadership: { src: "/images/Captain.jpeg", width: 736, height: 1308 },
+  contact: { src: "/images/portal.jpeg", width: 736, height: 425 },
 };
 
 /** Interface wording: buttons, small headings and screen-reader labels. */
@@ -44,6 +46,10 @@ export const labels = {
   filterComplete: "Complete",
   filterInProgress: "In progress",
   viewCode: "View on GitHub",
+  showDetails: "View details",
+  hideDetails: "Back",
+  highlights: "Highlights",
+  techStack: "Tech stack",
   opensInNewTab: "opens in a new tab",
   softSkills: "Soft skills",
   contactLinks: "Contact links",

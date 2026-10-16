@@ -6,11 +6,11 @@ A single-page portfolio with a professional layout and small Avengers-themed tou
 |---|---|---|
 | Home | Iron Man arc reactor | Name animates in; **Snap** dissolves half the education cards, which come back after 4 s |
 | Skills | Thor lightning and art | Skills orbit the Thor art in 3D; bolt strikes every 5 s; cards animate in on scroll |
-| Projects | Hulk fist, Black Panther ring | Filter by status with layout animations; the fist shakes on first view |
+| Projects | Hulk art, fist and Black Panther ring | Flashcards flip in 3D to show full project details; filter by status with layout animations |
 | Leadership | Captain America shield and art | Shield art turns in 3D as you scroll; timeline draws and roles flip in |
-| Contact | Doctor Strange portal | Rings turn at three speeds around a pulsing core |
+| Contact | Doctor Strange portal | The portal opens and the contact cards fly out of it |
 
-Emblems are drawn in CSS/SVG. The Skills and Leadership art in `public/images/` is third-party artwork supplied by the site owner; Marvel characters are trademarks of Marvel/Disney, and this site is not affiliated with them.
+Emblems are drawn in CSS/SVG. The section art in `public/images/` is third-party artwork supplied by the site owner; Marvel characters are trademarks of Marvel/Disney, and this site is not affiliated with them.
 
 ## Stack
 

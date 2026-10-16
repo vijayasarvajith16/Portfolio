@@ -7,7 +7,11 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
 - Professional first, Avengers touch second. The site is for internship applications: name, college, department, CGPA and projects must read clearly within the first screen.
 - Each section has one hero accent: Hero (Iron Man, gold/red), Skills (Thor, arc blue), Projects (Hulk and Black Panther, green/purple), Leadership (Captain America, red/blue), Contact (Doctor Strange, purple/gold).
 - Heroes appear as small CSS/SVG emblems (arc reactor, lightning, fist/ring, shield, portal), marked `aria-hidden`. One signature interaction per section, kept subtle.
-- Exception (owner's decision, 2026-10-16): Skills uses `public/images/Thor.jpeg` (a 3D skill orbit around it, plus a blurred parallax background) and Leadership uses `public/images/Captain.jpeg` (a scroll-linked 3D panel, plus a blurred parallax background). Paths live in `media` in portfolio.ts.
+- Exception (owner's decision, 2026-10-16): owner-supplied art in `public/images/`, with paths in `media` in portfolio.ts:
+  - Skills: `Thor.jpeg`, as a 3D skill orbit around it plus a blurred parallax background.
+  - Projects: `Hulk.jpeg`, as a blurred parallax background behind 3D flip flashcards.
+  - Leadership: `Captain.jpeg`, as a scroll-linked 3D panel plus a blurred parallax background.
+  - Contact: `portal.jpeg`, screen-blended spark ring that the contact cards fly out of.
 - Typography (next/font, mapped in `globals.css` `@theme inline`):
   - `font-display`: Barlow Condensed 700. Section titles and short labels only, never paragraphs.
   - `font-name`: Montserrat 800. The hero name only.
@@ -31,7 +35,7 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
 ## Media rules
 - Videos use a native `<video>` element: muted, loop, playsInline, with a poster image and both WebM and MP4 sources.
 - Videos are abstract or royalty-free loops only. Never use Marvel film footage or stills.
-- Character art is limited to the two owner-supplied images listed under Design direction. Do not add more without asking.
+- Character art is limited to the owner-supplied images listed under Design direction. Do not add more without asking.
 - Raw source clips go in `raw/` (git-ignored) and are encoded into `public/videos/`, each under 5 MB.
 
 ## Accessibility and motion
