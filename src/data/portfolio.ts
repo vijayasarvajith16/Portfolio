@@ -39,6 +39,7 @@ export const labels = {
   filterInProgress: "In progress",
   viewCode: "View on GitHub",
   opensInNewTab: "opens in a new tab",
+  softSkills: "Soft skills",
 };
 
 export const education = [

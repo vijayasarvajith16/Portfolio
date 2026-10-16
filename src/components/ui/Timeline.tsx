@@ -1,3 +1,8 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
+
 export type TimelineItem = {
   title: string;
   subtitle?: string;
@@ -8,24 +13,52 @@ export type TimelineItem = {
 type Props = {
   items: TimelineItem[];
   accent: string;
+  /** Second colour for the bottom of the drawn line. */
+  accentEnd?: string;
 };
 
-/** Vertical timeline: a line on the left with a dot per item. */
-export default function Timeline({ items, accent }: Props) {
+/**
+ * Vertical timeline. The line draws down as the visitor scrolls, and each item fades in
+ * as it enters the viewport. Under reduced motion the line is drawn and items are shown.
+ */
+export default function Timeline({ items, accent, accentEnd = accent }: Props) {
+  const ref = useRef<HTMLOListElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 55%"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+
   return (
-    <ol className="relative space-y-8 border-l border-line pl-6 sm:pl-8">
+    <ol ref={ref} className="relative space-y-10 pl-8 sm:pl-10">
+      <span aria-hidden className="absolute bottom-0 left-[5px] top-0 w-0.5 rounded-full bg-line" />
+      {/* data-reveal: under reduced motion, CSS shows the line fully drawn. */}
+      <motion.span
+        aria-hidden
+        data-reveal
+        className="absolute bottom-0 left-[5px] top-0 w-0.5 origin-top rounded-full"
+        style={{
+          scaleY: progress,
+          background: `linear-gradient(to bottom, ${accent}, ${accentEnd})`,
+        }}
+      />
       {items.map((item) => (
-        <li key={`${item.title}-${item.period}`} className="relative">
+        <motion.li
+          key={`${item.title}-${item.period}`}
+          data-reveal
+          className="relative"
+          initial={{ opacity: 0, x: -16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <span
             aria-hidden
-            className="absolute -left-[calc(1.5rem+5px)] top-1.5 size-2.5 rounded-full ring-4 ring-ink sm:-left-[calc(2rem+5px)]"
+            className="absolute -left-8 top-1.5 size-3 rounded-full ring-4 ring-ink sm:-left-10"
             style={{ background: accent }}
           />
           <p className="text-xs font-semibold uppercase tracking-widest text-muted">{item.period}</p>
-          <h3 className="mt-1 text-lg font-semibold text-text">{item.title}</h3>
+          <h3 className="mt-1 font-heading text-xl text-text">{item.title}</h3>
           {item.subtitle && <p className="text-sm text-muted">{item.subtitle}</p>}
-          {item.body && <p className="mt-2 text-sm leading-relaxed text-text/85">{item.body}</p>}
-        </li>
+          {item.body && <p className="mt-3 max-w-2xl leading-relaxed text-text/85">{item.body}</p>}
+        </motion.li>
       ))}
     </ol>
   );

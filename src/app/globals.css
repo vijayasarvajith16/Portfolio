@@ -20,6 +20,7 @@
   --animate-drift-slow: drift 30s ease-in-out infinite alternate-reverse;
   --animate-spin-slow: orbit 28s linear infinite;
   --animate-spin-reverse: orbit 18s linear infinite reverse;
+  --animate-spin-shield: orbit 10s linear infinite;
   --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
   --animate-flash: flash 5s linear infinite;
   --animate-ring-pulse: ring-pulse 2.4s ease-out infinite;
