@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
+import { playDust } from "@/lib/dust";
 
 type Education = { degree: string; school: string; period: string; score: string };
-type Speck = { id: number; left: number; top: number; dx: number; dy: number; delay: number };
 
 type Props = {
   items: Education[];
@@ -12,47 +12,65 @@ type Props = {
 };
 
 const RESTORE_AFTER_MS = 4000;
-const SPECKS_PER_CARD = 22;
-
-function makeSpecks(): Speck[] {
-  return Array.from({ length: SPECKS_PER_CARD }, (_, id) => ({
-    id,
-    left: 8 + Math.random() * 84,
-    top: 12 + Math.random() * 76,
-    dx: 40 + Math.random() * 100,
-    dy: -(30 + Math.random() * 80),
-    delay: Math.random() * 0.35,
-  }));
-}
+const DISSOLVE_MS = 1900;
+const REFORM_MS = 1300;
 
 /**
- * Education cards with the Iron Man "Snap": clicking a card turns it to dust, and it
- * reassembles after 4 seconds. Each card snaps on its own. Instant under reduced motion.
+ * Education cards with the Iron Man "Snap": clicking a card disintegrates it into dust made
+ * of its own pixels, and after 4 seconds the dust flies back and reassembles it. Each card
+ * snaps on its own. Under reduced motion the card simply hides and returns.
  */
 export default function SnapEducation({ items, labels }: Props) {
   const reduceMotion = useReducedMotion();
-  const [vanished, setVanished] = useState<Map<number, Speck[]>>(new Map());
-  const timers = useRef(new Map<number, ReturnType<typeof setTimeout>>());
+  const [hidden, setHidden] = useState<Set<number>>(new Set());
+  const busy = useRef(new Set<number>());
+  const cards = useRef(new Map<number, HTMLDivElement>());
+  const timers = useRef(new Set<ReturnType<typeof setTimeout>>());
 
   useEffect(() => {
     const pending = timers.current;
     return () => pending.forEach(clearTimeout);
   }, []);
 
+  const setCardHidden = (i: number, value: boolean) =>
+    setHidden((prev) => {
+      const next = new Set(prev);
+      if (value) next.add(i);
+      else next.delete(i);
+      return next;
+    });
+
+  function later(fn: () => void, ms: number) {
+    const id = setTimeout(() => {
+      timers.current.delete(id);
+      fn();
+    }, ms);
+    timers.current.add(id);
+  }
+
   function snap(i: number) {
-    if (vanished.has(i)) return;
-    setVanished((prev) => new Map(prev).set(i, makeSpecks()));
-    timers.current.set(
-      i,
-      setTimeout(() => {
-        timers.current.delete(i);
-        setVanished((prev) => {
-          const next = new Map(prev);
-          next.delete(i);
-          return next;
-        });
-      }, RESTORE_AFTER_MS),
-    );
+    const card = cards.current.get(i);
+    const host = card?.parentElement;
+    if (!card || !host || busy.current.has(i)) return;
+    busy.current.add(i);
+
+    if (reduceMotion) {
+      setCardHidden(i, true);
+      later(() => {
+        setCardHidden(i, false);
+        busy.current.delete(i);
+      }, RESTORE_AFTER_MS);
+      return;
+    }
+
+    // The dust starts as an exact copy of the card, so the real card can vanish at once.
+    playDust(card, host, { duration: DISSOLVE_MS });
+    setCardHidden(i, true);
+    later(async () => {
+      await playDust(card, host, { reverse: true, duration: REFORM_MS });
+      setCardHidden(i, false);
+      busy.current.delete(i);
+    }, RESTORE_AFTER_MS);
   }
 
   return (
@@ -66,21 +84,17 @@ export default function SnapEducation({ items, labels }: Props) {
 
       <ul className="grid gap-4 sm:grid-cols-3">
         {items.map((item, i) => {
-          const specks = vanished.get(i);
-          const gone = specks !== undefined;
+          const gone = hidden.has(i);
           return (
             <li key={item.degree} className="relative">
-              <motion.div
+              <div
+                ref={(el) => {
+                  if (el) cards.current.set(i, el);
+                  else cards.current.delete(i);
+                }}
                 aria-hidden={gone}
-                animate={gone ? { opacity: 0, y: -16, filter: "blur(6px)" } : { opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={
-                  reduceMotion
-                    ? { duration: 0 }
-                    : gone
-                      ? { duration: 1.1, ease: "easeIn", delay: 0.1 }
-                      : { duration: 0.6, ease: "easeOut" }
-                }
                 className="group relative h-full cursor-pointer rounded-2xl border border-line bg-surface/75 p-5 backdrop-blur-sm transition-colors hover:border-gold/60"
+                style={{ opacity: gone ? 0 : 1 }}
               >
                 <p className="text-xs font-semibold uppercase tracking-widest text-muted">{item.period}</p>
                 <h3 className="mt-2 font-heading text-lg leading-snug text-text">{item.degree}</h3>
@@ -97,29 +111,7 @@ export default function SnapEducation({ items, labels }: Props) {
                     {labels.snapCard}: {item.degree}
                   </span>
                 </button>
-              </motion.div>
-
-              <AnimatePresence>
-                {gone && !reduceMotion && (
-                  <motion.div
-                    key="dust"
-                    aria-hidden
-                    exit={{ opacity: 0 }}
-                    className="pointer-events-none absolute inset-0"
-                  >
-                    {specks.map((s) => (
-                      <motion.span
-                        key={s.id}
-                        className="absolute size-1.5 rounded-[1px] bg-gold/80"
-                        style={{ left: `${s.left}%`, top: `${s.top}%` }}
-                        initial={{ opacity: 0.9, x: 0, y: 0 }}
-                        animate={{ opacity: 0, x: s.dx, y: s.dy }}
-                        transition={{ duration: 1.2, delay: s.delay, ease: "easeOut" }}
-                      />
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              </div>
             </li>
           );
         })}

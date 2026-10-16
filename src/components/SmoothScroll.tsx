@@ -18,7 +18,13 @@ export default function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({ autoRaf: true, anchors: true });
+    const lenis = new Lenis({
+      autoRaf: true,
+      // A touch more glide than the default (0.1) for a softer, continuous feel.
+      lerp: 0.085,
+      // Nav links glide to their section with an ease-out instead of jumping.
+      anchors: { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) },
+    });
     instance = lenis;
     return () => {
       instance = null;

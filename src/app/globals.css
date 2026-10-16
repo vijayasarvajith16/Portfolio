@@ -149,6 +149,13 @@
 
 html {
   background: var(--color-ink);
+  /* Reserve the scrollbar's space, so locking scroll (dialogs) never changes the page width and re-lays-out everything. */
+  scrollbar-gutter: stable;
+}
+
+/* Lenis clips overflow while stopped; hidden keeps the reserved scrollbar gutter instead. */
+html.lenis.lenis-stopped:not(.lenis-autoToggle) {
+  overflow: hidden;
 }
 
 body {

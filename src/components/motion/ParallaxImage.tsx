@@ -30,7 +30,8 @@ export default function ParallaxImage({
 
   return (
     <div ref={ref} className={`absolute ${frameClassName}`}>
-      <motion.div data-reveal className="absolute inset-x-0 -inset-y-[10%]" style={{ y }}>
+      {/* will-change keeps the moving art on its own GPU layer, so scrolling never re-paints the blurred image. */}
+      <motion.div data-reveal className="absolute inset-x-0 -inset-y-[10%] will-change-transform" style={{ y }}>
         <Image
           src={src}
           alt=""

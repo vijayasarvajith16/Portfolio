@@ -36,15 +36,18 @@ type Props = {
   labels: Labels;
 };
 
-const COMPLETE = "Complete";
+/** "Complete" or "Completed" (any case) count as done; every other status is in progress. */
+const isComplete = (status: string) => /^completed?$/i.test(status.trim());
 const CARD_STACK = 2;
 const ease = [0.22, 1, 0.36, 1] as const;
 /** How long a card absorbs kinetic energy before it grows into the details panel. */
-const CHARGE_MS = 480;
+const CHARGE_MS = 420;
+/** Spring for the card-to-panel morph: settles softly instead of stopping on a fixed curve. */
+const morph = { type: "spring", stiffness: 170, damping: 26, mass: 0.9 } as const;
 const noop = () => () => {};
 
 const matches = (status: string, filter: Filter) =>
-  filter === "all" || (filter === "complete" ? status === COMPLETE : status !== COMPLETE);
+  filter === "all" || (filter === "complete" ? isComplete(status) : !isComplete(status));
 
 const cardId = (name: string) => `project-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
@@ -164,7 +167,7 @@ export default function ProjectGrid({ projects, labels }: Props) {
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const color = status === COMPLETE ? "var(--color-hulk)" : "var(--color-gold)";
+  const color = isComplete(status) ? "var(--color-hulk)" : "var(--color-gold)";
   return (
     <span
       className="relative inline-flex shrink-0 items-center gap-1.5 self-start rounded-full border bg-surface px-2.5 py-0.5 text-xs font-semibold"
@@ -213,9 +216,9 @@ function ProjectCard({
       style={{ borderRadius: 16, opacity: hidden ? 0 : 1 }}
       whileHover={{ y: -4 }}
       animate={{ scale: charging ? 1.04 : 1 }}
-      transition={{ duration: 0.45, ease }}
+      transition={morph}
     >
-      <AnimatePresence>{charging && <KineticCharge radius={16} />}</AnimatePresence>
+      <AnimatePresence>{charging && <KineticCharge radius={16} duration={CHARGE_MS / 1000} />}</AnimatePresence>
       <CardNumber n={number} className="bottom-3 right-4 text-5xl" />
       <StatusBadge status={project.status} />
       <h3 className="mt-3 font-heading text-lg leading-snug text-text">{project.name}</h3>
@@ -312,11 +315,11 @@ function ProjectDialog({
   return (
     <>
       <motion.div
-        className="fixed inset-0 z-[60] bg-ink/75 backdrop-blur-sm"
+        className="fixed inset-0 z-[60] bg-ink/85"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.45, ease }}
         onClick={onClose}
       />
       <div className="pointer-events-none fixed inset-0 z-[61] grid place-items-center p-4">
@@ -328,14 +331,14 @@ function ProjectDialog({
           aria-modal="true"
           aria-labelledby={titleId}
           data-lenis-prevent
-          className="pointer-events-auto relative col-start-1 row-start-1 max-h-[85svh] w-full max-w-2xl overflow-y-auto border border-gold/50 bg-surface p-6 shadow-2xl shadow-black/60 sm:p-8"
+          className="pointer-events-auto relative col-start-1 row-start-1 max-h-[85svh] w-full max-w-2xl overflow-y-auto border border-gold/50 bg-surface p-6 sm:p-8"
           style={{ borderRadius: 24 }}
-          transition={{ duration: 0.5, ease }}
+          transition={morph}
         >
           {kinetic && <KineticAfterglow radius={24} />}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0, transition: { delay: 0.2, duration: 0.35 } }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 0.22, duration: 0.45, ease } }}
             exit={{ opacity: 0, transition: { duration: 0.1 } }}
           >
             <CardNumber n={number} className="bottom-5 right-6 text-7xl" />

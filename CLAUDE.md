@@ -20,7 +20,7 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
   - `font-sans`: Inter (variable). Body and UI text, at least 16px with line-height about 1.6.
   - `font-mono`: JetBrains Mono 400. Contact details (email, phone, links).
 - Tech logos come from `simple-icons` (CC0) via `TechIcon` in `src/lib/techIcons.tsx`; pass `tech` to `Chip`. Technologies without a logo get a line icon there. Add new tech names to that file.
-- Skills: lightning crackles from the cursor (`LightningCanvas`). Education: clicking a card snaps it to dust; it returns after 4 s.
+- Skills: lightning crackles from the cursor (`LightningCanvas`). Education: clicking a card disintegrates it into dust made from its own pixels (`src/lib/dust.ts`); the dust reassembles it after 4 s.
 - Project cards play a Black Panther "kinetic charge" (edge beam, vibranium mesh, shockwave) before growing into the details dialog; skipped under reduced motion.
 - Section backgrounds are CSS gradients by default; an abstract video loop is used only if its file exists in `public/videos/`.
 
@@ -41,6 +41,11 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
 - Videos are abstract or royalty-free loops only. Never use Marvel film footage or stills.
 - Character art is limited to the owner-supplied images listed under Design direction. Do not add more without asking.
 - Raw source clips go in `raw/` (git-ignored) and are encoded into `public/videos/`, each under 5 MB.
+
+## Scroll performance
+- Anything that moves while the page scrolls (parallax art) must be on its own GPU layer (`will-change-transform`), or scrolling repaints it every frame.
+- Avoid large blurred shadows and full-screen backdrop blur on elements that animate in; they stall integrated GPUs.
+- `html` reserves the scrollbar gutter, so scroll locking never changes the page width.
 
 ## Accessibility and motion
 - Respect `prefers-reduced-motion`: stop looping videos and decorative motion, and show poster images or static states instead.

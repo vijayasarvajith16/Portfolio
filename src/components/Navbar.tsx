@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { profile, sections, type SectionId } from "@/data/portfolio";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<SectionId>("home");
+  // Reading progress, from the top of the page to the end.
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   // Highlight the link of the section currently in the middle of the viewport.
   useEffect(() => {
@@ -80,6 +84,15 @@ export default function Navbar() {
           />
         </button>
       </nav>
+
+      <motion.div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-0.5 origin-left"
+        style={{
+          scaleX: progress,
+          background: "linear-gradient(to right, var(--color-gold), var(--color-arc), var(--color-hulk), var(--color-red), var(--color-purple))",
+        }}
+      />
 
       <div
         id="mobile-menu"
