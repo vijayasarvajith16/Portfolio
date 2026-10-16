@@ -86,10 +86,19 @@ export const education = [
 ];
 
 export const skillGroups = [
-  { category: "Languages", items: ["C++", "C", "Java", "JavaScript", "Python (basics)"] },
-  { category: "Web Development", items: ["HTML", "CSS", "Bootstrap", "React", "Node.js", "Express.js"] },
+  {
+    category: "Languages",
+    items: ["C++", "C", "Java", "JavaScript", "Python (basics)"],
+  },
+  {
+    category: "Web Development",
+    items: ["HTML", "CSS", "Bootstrap", "React", "Node.js", "Express.js"],
+  },
   { category: "Databases", items: ["MongoDB", "MySQL", "Oracle", "Redis"] },
-  { category: "Tools & DevOps", items: ["Git", "GitHub", "Docker", "Postman", "RabbitMQ"] },
+  {
+    category: "Tools & DevOps",
+    items: ["Git", "GitHub", "Docker", "Postman", "RabbitMQ"],
+  },
 ];
 
 export const projects = [
@@ -140,7 +149,7 @@ export const projects = [
   {
     name: "HR Task Forge",
     period: "Jul - Aug 2026",
-    status: "Web complete, Android in progress",
+    status: "Completed",
     stack: ["Node.js", "Express", "MongoDB", "Socket.io", "React"],
     highlights: [
       "Real-time Kanban board for the HR team with live multi-user sync.",
@@ -151,7 +160,7 @@ export const projects = [
   {
     name: "FraudGuard",
     period: "Aug - Oct 2026",
-    status: "In progress",
+    status: "Completed",
     stack: ["FastAPI", "Isolation Forest", "XGBoost", "Docker", "Kubernetes"],
     highlights: [
       "Fintech fraud detection with two-level scanning and four risk tiers.",
