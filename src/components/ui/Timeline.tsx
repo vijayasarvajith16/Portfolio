@@ -18,8 +18,8 @@ type Props = {
 };
 
 /**
- * Vertical timeline. The line draws down as the visitor scrolls, and each item fades in
- * as it enters the viewport. Under reduced motion the line is drawn and items are shown.
+ * Vertical timeline. The line draws down as the visitor scrolls, and each item flips up
+ * in 3D as it enters the viewport. Under reduced motion the line is drawn and items are shown.
  */
 export default function Timeline({ items, accent, accentEnd = accent }: Props) {
   const ref = useRef<HTMLOListElement>(null);
@@ -44,10 +44,11 @@ export default function Timeline({ items, accent, accentEnd = accent }: Props) {
           key={`${item.title}-${item.period}`}
           data-reveal
           className="relative"
-          initial={{ opacity: 0, x: -16 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          style={{ transformPerspective: 900, transformOrigin: "left center" }}
+          initial={{ opacity: 0, y: 24, rotateX: 28 }}
+          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           <span
             aria-hidden

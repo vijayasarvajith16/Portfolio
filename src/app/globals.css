@@ -174,3 +174,85 @@ section[id] {
     transition-duration: 0.01ms !important;
   }
 }
+
+/*
+ * Skills orbit (3D). Each ring spins around the Y axis inside a tilted wrapper. Every chip
+ * sits at angle --a and radius --r, and its face counter-rotates so the text always faces
+ * the viewer. Chips dim as they pass behind the centre card. --orbit-duration is set per ring.
+ */
+.orbit-stage {
+  transform-style: preserve-3d;
+}
+
+.orbit-tilt {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(-16deg);
+}
+
+.orbit-ring {
+  position: absolute;
+  left: 50%;
+  transform-style: preserve-3d;
+  animation: orbit-y var(--orbit-duration) linear infinite;
+}
+
+.orbit-ring[data-reverse] {
+  animation-direction: reverse;
+}
+
+.orbit-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--a)) translateZ(var(--r));
+}
+
+.orbit-face {
+  display: block;
+  white-space: nowrap;
+  /* Same as the first keyframe, so a still orbit (reduced motion) still faces the viewer. */
+  transform: rotateY(calc(var(--a) * -1)) rotateX(16deg) translate(-50%, -50%);
+  animation:
+    orbit-face var(--orbit-duration) linear infinite,
+    orbit-depth var(--orbit-duration) linear infinite;
+  animation-delay: 0s, var(--depth-delay);
+}
+
+.orbit-ring[data-reverse] .orbit-face {
+  animation-direction: reverse, normal;
+}
+
+.orbit-stage[data-paused] .orbit-ring,
+.orbit-stage[data-paused] .orbit-face {
+  animation-play-state: paused;
+}
+
+@keyframes orbit-y {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Undo the ring, angle and tilt rotations, then centre the chip on its point. */
+@keyframes orbit-face {
+  from {
+    transform: rotateY(calc(var(--a) * -1)) rotateX(16deg) translate(-50%, -50%);
+  }
+  to {
+    transform: rotateY(calc(var(--a) * -1 - 360deg)) rotateX(16deg) translate(-50%, -50%);
+  }
+}
+
+/* 0% is the front of the orbit, 50% the back. */
+@keyframes orbit-depth {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}

@@ -23,6 +23,12 @@ export const sections = [
 
 export type SectionId = (typeof sections)[number]["id"];
 
+/** Owner-supplied section art in public/images (filenames are case-sensitive on the server). */
+export const media = {
+  skills: { src: "/images/Thor.jpeg", width: 736, height: 1554 },
+  leadership: { src: "/images/Captain.jpeg", width: 736, height: 1308 },
+};
+
 /** Interface wording: buttons, small headings and screen-reader labels. */
 export const labels = {
   cgpa: "CGPA",

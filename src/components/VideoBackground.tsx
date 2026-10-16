@@ -1,5 +1,6 @@
 import { publicFileExists } from "@/lib/files";
 import BackgroundVideo from "./BackgroundVideo";
+import ParallaxImage from "./motion/ParallaxImage";
 
 type Props = {
   /** Base path without extension, e.g. "/videos/hero". */
@@ -8,13 +9,15 @@ type Props = {
   poster: string;
   /** Two accent colours for the animated gradient shown behind (or instead of) the video. */
   glow: [string, string];
+  /** Optional background art from public/, shown blurred with a parallax drift. */
+  image?: string;
 };
 
 /**
- * Section background: a slow animated gradient, plus an abstract video loop when
- * `<src>.webm` or `<src>.mp4` exists in public/. A dark overlay keeps text readable.
+ * Section background: a slow animated gradient, optional background art, and an abstract
+ * video loop when `<src>.webm` or `<src>.mp4` exists in public/. A dark overlay keeps text readable.
  */
-export default function VideoBackground({ src, poster, glow }: Props) {
+export default function VideoBackground({ src, poster, glow, image }: Props) {
   const sources = [
     { src: `${src}.webm`, type: "video/webm" },
     { src: `${src}.mp4`, type: "video/mp4" },
@@ -31,6 +34,8 @@ export default function VideoBackground({ src, poster, glow }: Props) {
         className="absolute -bottom-1/3 -right-1/4 size-[65vmax] rounded-full opacity-30 motion-safe:animate-drift-slow"
         style={{ background: `radial-gradient(circle, ${glow[1]} 0%, transparent 60%)` }}
       />
+
+      {image && <ParallaxImage src={image} />}
 
       {sources.length > 0 && <BackgroundVideo sources={sources} poster={posterSrc} />}
 

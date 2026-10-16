@@ -8,16 +8,18 @@ type Props = {
   labelledBy: string;
   children: React.ReactNode;
   className?: string;
+  /** Optional background art from public/, e.g. "/images/Thor.jpeg". */
+  image?: string;
 };
 
 /** Full-width section with its themed background and a centred content column. */
-export default function SectionShell({ id, labelledBy, children, className = "" }: Props) {
+export default function SectionShell({ id, labelledBy, children, className = "", image }: Props) {
   const { glow } = sectionMeta(id);
   const video = id === "home" ? "hero" : id;
 
   return (
-    <section id={id} aria-labelledby={labelledBy} className="relative isolate overflow-hidden">
-      <VideoBackground src={`/videos/${video}`} poster={`/videos/${video}-poster.jpg`} glow={glow} />
+    <section id={id} aria-labelledby={labelledBy} className="relative isolate overflow-clip">
+      <VideoBackground src={`/videos/${video}`} poster={`/videos/${video}-poster.jpg`} glow={glow} image={image} />
       <div className={`mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32 ${className}`}>{children}</div>
     </section>
   );

@@ -6,7 +6,8 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
 ## Design direction
 - Professional first, Avengers touch second. The site is for internship applications: name, college, department, CGPA and projects must read clearly within the first screen.
 - Each section has one hero accent: Hero (Iron Man, gold/red), Skills (Thor, arc blue), Projects (Hulk and Black Panther, green/purple), Leadership (Captain America, red/blue), Contact (Doctor Strange, purple/gold).
-- Heroes appear only as small CSS/SVG emblems (arc reactor, lightning, fist/ring, shield, portal), marked `aria-hidden`. One signature interaction per section, kept subtle.
+- Heroes appear as small CSS/SVG emblems (arc reactor, lightning, fist/ring, shield, portal), marked `aria-hidden`. One signature interaction per section, kept subtle.
+- Exception (owner's decision, 2026-10-16): Skills uses `public/images/Thor.jpeg` (a 3D skill orbit around it, plus a blurred parallax background) and Leadership uses `public/images/Captain.jpeg` (a scroll-linked 3D panel, plus a blurred parallax background). Paths live in `media` in portfolio.ts.
 - Typography (next/font, mapped in `globals.css` `@theme inline`):
   - `font-display`: Barlow Condensed 700. Section titles and short labels only, never paragraphs.
   - `font-name`: Montserrat 800. The hero name only.
@@ -29,8 +30,8 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
 
 ## Media rules
 - Videos use a native `<video>` element: muted, loop, playsInline, with a poster image and both WebM and MP4 sources.
-- Videos are abstract or royalty-free loops only. Never use Marvel footage, film stills, or copyrighted characters.
-- No character images. Hero emblems are drawn in CSS/SVG.
+- Videos are abstract or royalty-free loops only. Never use Marvel film footage or stills.
+- Character art is limited to the two owner-supplied images listed under Design direction. Do not add more without asking.
 - Raw source clips go in `raw/` (git-ignored) and are encoded into `public/videos/`, each under 5 MB.
 
 ## Accessibility and motion
