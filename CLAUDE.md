@@ -19,6 +19,8 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
   - `font-heading`: Space Grotesk 600. Project and card titles.
   - `font-sans`: Inter (variable). Body and UI text, at least 16px with line-height about 1.6.
   - `font-mono`: JetBrains Mono 400. Contact details (email, phone, links).
+- Tech logos come from `simple-icons` (CC0) via `TechIcon` in `src/lib/techIcons.tsx`; pass `tech` to `Chip`. Technologies without a logo get a line icon there. Add new tech names to that file.
+- Project cards play a Black Panther "kinetic charge" (edge beam, vibranium mesh, shockwave) before growing into the details dialog; skipped under reduced motion.
 - Section backgrounds are CSS gradients by default; an abstract video loop is used only if its file exists in `public/videos/`.
 
 ## Content rules

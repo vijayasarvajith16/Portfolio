@@ -45,7 +45,9 @@ export default function SkillGrid({ groups }: { groups: Group[] }) {
             >
               {group.items.map((item) => (
                 <motion.li key={item} data-reveal variants={chip}>
-                  <Chip accent="var(--color-arc)">{item}</Chip>
+                  <Chip accent="var(--color-arc)" tech={item}>
+                    {item}
+                  </Chip>
                 </motion.li>
               ))}
             </motion.ul>

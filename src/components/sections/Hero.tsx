@@ -73,7 +73,9 @@ export default function Hero() {
             <ul aria-label={labels.coreSkills} className="mt-8 flex max-w-xl flex-wrap gap-2">
               {coreSkills.map((skill) => (
                 <li key={skill}>
-                  <Chip accent="var(--color-gold)">{skill}</Chip>
+                  <Chip accent="var(--color-gold)" tech={skill}>
+                    {skill}
+                  </Chip>
                 </li>
               ))}
             </ul>

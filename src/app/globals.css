@@ -283,3 +283,24 @@ section[id] {
     opacity: 0.3;
   }
 }
+
+/*
+ * Black Panther kinetic charge. .kinetic-border masks its box down to a 2px ring so a
+ * rotating conic gradient inside it reads as energy racing around the edge.
+ * .vibranium-mesh is the suit's triangle lattice.
+ */
+.kinetic-border {
+  padding: 2px;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+}
+
+.vibranium-mesh {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='24'%3E%3Cpath d='M0 0 14 24 28 0M0 24h28' fill='none' stroke='%23a78bfa' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 28px 24px;
+}

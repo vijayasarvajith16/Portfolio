@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { TechIcon } from "@/lib/techIcons";
 
 type Art = { src: string; width: number; height: number };
 
@@ -117,7 +118,10 @@ export default function SkillsOrbit({ rings, art }: Props) {
                       }
                     >
                       <span className="orbit-face rounded-full border border-arc/50 bg-ink/85 px-2 py-0.5 text-[11px] font-semibold text-text shadow-[0_0_18px_rgb(76_201_240/0.3)] sm:px-3 sm:py-1 sm:text-sm">
-                        {skill}
+                        <span className="flex items-center gap-1.5">
+                          <TechIcon name={skill} className="size-3 sm:size-4" />
+                          {skill}
+                        </span>
                       </span>
                     </span>
                   );

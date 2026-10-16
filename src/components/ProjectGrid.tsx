@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { getLenis } from "./SmoothScroll";
+import { KineticAfterglow, KineticCharge, KineticShockwave } from "./motion/Kinetic";
 import Chip from "./ui/Chip";
 
 type Project = {
@@ -38,6 +39,8 @@ type Props = {
 const COMPLETE = "Complete";
 const CARD_STACK = 2;
 const ease = [0.22, 1, 0.36, 1] as const;
+/** How long a card absorbs kinetic energy before it grows into the details panel. */
+const CHARGE_MS = 480;
 const noop = () => () => {};
 
 const matches = (status: string, filter: Filter) =>
@@ -52,7 +55,26 @@ const cardId = (name: string) => `project-${name.toLowerCase().replace(/[^a-z0-9
 export default function ProjectGrid({ projects, labels }: Props) {
   const [filter, setFilter] = useState<Filter>("all");
   const [open, setOpen] = useState<Project | null>(null);
+  const [charging, setCharging] = useState<string | null>(null);
+  const chargeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const reduceMotion = useReducedMotion();
   const triggers = useRef(new Map<string, HTMLButtonElement>());
+
+  useEffect(() => () => clearTimeout(chargeTimer.current), []);
+
+  // Black Panther kinetic charge: the card absorbs energy, then releases it as it grows.
+  function openProject(project: Project) {
+    if (charging) return;
+    if (reduceMotion) {
+      setOpen(project);
+      return;
+    }
+    setCharging(project.name);
+    chargeTimer.current = setTimeout(() => {
+      setCharging(null);
+      setOpen(project);
+    }, CHARGE_MS);
+  }
   const mounted = useSyncExternalStore(noop, () => true, () => false);
 
   const filters: { id: Filter; label: string }[] = [
@@ -108,8 +130,9 @@ export default function ProjectGrid({ projects, labels }: Props) {
                 project={project}
                 number={projects.indexOf(project) + 1}
                 hidden={open?.name === project.name}
+                charging={charging === project.name}
                 labels={labels}
-                onOpen={() => setOpen(project)}
+                onOpen={() => openProject(project)}
                 triggerRef={(el) => {
                   if (el) triggers.current.set(project.name, el);
                   else triggers.current.delete(project.name);
@@ -129,6 +152,7 @@ export default function ProjectGrid({ projects, labels }: Props) {
                 project={open}
                 number={projects.indexOf(open) + 1}
                 labels={labels}
+                kinetic={!reduceMotion}
                 onClose={close}
               />
             )}
@@ -167,6 +191,7 @@ function ProjectCard({
   project,
   number,
   hidden,
+  charging,
   labels,
   onOpen,
   triggerRef,
@@ -174,6 +199,7 @@ function ProjectCard({
   project: Project;
   number: number;
   hidden: boolean;
+  charging: boolean;
   labels: Labels;
   onOpen: () => void;
   triggerRef: (el: HTMLButtonElement | null) => void;
@@ -186,8 +212,10 @@ function ProjectCard({
       className="group relative flex h-full flex-col border border-line bg-surface/90 p-4 shadow-lg shadow-black/30 transition-[border-color] duration-300 hover:border-gold/60 sm:p-5"
       style={{ borderRadius: 16, opacity: hidden ? 0 : 1 }}
       whileHover={{ y: -4 }}
+      animate={{ scale: charging ? 1.04 : 1 }}
       transition={{ duration: 0.45, ease }}
     >
+      <AnimatePresence>{charging && <KineticCharge radius={16} />}</AnimatePresence>
       <CardNumber n={number} className="bottom-3 right-4 text-5xl" />
       <StatusBadge status={project.status} />
       <h3 className="mt-3 font-heading text-lg leading-snug text-text">{project.name}</h3>
@@ -195,7 +223,7 @@ function ProjectCard({
       <ul className="mt-4 flex flex-wrap gap-1.5">
         {project.stack.slice(0, CARD_STACK).map((tech) => (
           <li key={tech}>
-            <Chip accent="var(--color-purple)" className="sm:text-xs!">
+            <Chip accent="var(--color-purple)" tech={tech} className="sm:text-xs!">
               {tech}
             </Chip>
           </li>
@@ -232,11 +260,14 @@ function ProjectDialog({
   project,
   number,
   labels,
+  kinetic,
   onClose,
 }: {
   project: Project;
   number: number;
   labels: Labels;
+  /** Play the Black Panther kinetic release (off under reduced motion). */
+  kinetic: boolean;
   onClose: () => void;
 }) {
   const panel = useRef<HTMLDivElement>(null);
@@ -289,6 +320,7 @@ function ProjectDialog({
         onClick={onClose}
       />
       <div className="pointer-events-none fixed inset-0 z-[61] grid place-items-center p-4">
+        {kinetic && <KineticShockwave />}
         <motion.div
           ref={panel}
           layoutId={cardId(project.name)}
@@ -296,10 +328,11 @@ function ProjectDialog({
           aria-modal="true"
           aria-labelledby={titleId}
           data-lenis-prevent
-          className="pointer-events-auto relative max-h-[85svh] w-full max-w-2xl overflow-y-auto border border-gold/50 bg-surface p-6 shadow-2xl shadow-black/60 sm:p-8"
+          className="pointer-events-auto relative col-start-1 row-start-1 max-h-[85svh] w-full max-w-2xl overflow-y-auto border border-gold/50 bg-surface p-6 shadow-2xl shadow-black/60 sm:p-8"
           style={{ borderRadius: 24 }}
           transition={{ duration: 0.5, ease }}
         >
+          {kinetic && <KineticAfterglow radius={24} />}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0, transition: { delay: 0.2, duration: 0.35 } }}
@@ -336,7 +369,9 @@ function ProjectDialog({
             <ul className="mt-3 flex flex-wrap gap-2">
               {project.stack.map((tech) => (
                 <li key={tech}>
-                  <Chip accent="var(--color-purple)">{tech}</Chip>
+                  <Chip accent="var(--color-purple)" tech={tech}>
+                    {tech}
+                  </Chip>
                 </li>
               ))}
             </ul>
