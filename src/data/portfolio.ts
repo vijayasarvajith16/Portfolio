@@ -13,6 +13,16 @@ export const profile = {
   resume: "/resume.pdf",
 };
 
+export const sections = [
+  { id: "home", label: "Home" },
+  { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
+  { id: "leadership", label: "Leadership" },
+  { id: "contact", label: "Contact" },
+] as const;
+
+export type SectionId = (typeof sections)[number]["id"];
+
 export const education = [
   {
     degree: "B.E. Computer Science and Engineering",

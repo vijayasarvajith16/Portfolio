@@ -1,26 +1,74 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme static {
+  --color-ink: #0b0d14;
+  --color-surface: #131725;
+  --color-surface-2: #1a1f30;
+  --color-line: #262c40;
+  --color-text: #e9ecf5;
+  --color-muted: #a3abc2;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-gold: #f0b429;
+  --color-arc: #4cc9f0;
+  --color-purple: #8b5cf6;
+  --color-red: #e23636;
+  --color-hulk: #4ade80;
+  --color-cap: #3b6fe0;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --font-display: var(--font-anton), Impact, "Arial Narrow Bold", sans-serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+  --animate-drift-slow: drift 30s ease-in-out infinite alternate-reverse;
+
+  @keyframes drift {
+    0% {
+      transform: translate3d(-6%, -4%, 0) scale(1);
+    }
+    100% {
+      transform: translate3d(6%, 5%, 0) scale(1.15);
+    }
   }
 }
 
+:root {
+  --nav-height: 4rem;
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-ink);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-height);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
