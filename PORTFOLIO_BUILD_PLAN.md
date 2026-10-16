@@ -48,11 +48,15 @@ Every phase ends with `npm run lint`, `npm run build`, a commit, and a stop for 
 | Video weight | Network tab | Each under 5 MB |
 | Copyright | Review media | No Marvel footage, stills or characters |
 
+## Site URL
+
+Share images need an absolute URL (`metadataBase`, see `src/lib/site.ts`). It is taken from `NEXT_PUBLIC_SITE_URL` if set (set it in Vercel once there is a custom domain). Otherwise it uses Vercel's production domain, and local builds fall back to localhost.
+
 ## Deploy
 
 The owner pushes to GitHub and imports the repo into Vercel. The live URL then goes on the resume and LinkedIn.
 
 ## Open items
 
-- Copy the resume PDF to `public/resume.pdf`.
+- Replace the LinkedIn short link (`l1nk.dev`, which redirects through a third-party shortener page) with the direct `linkedin.com/in/...` URL.
 - Optional: abstract video loops. Put the source files in `raw/` and they get encoded with ffmpeg into `public/videos/`.

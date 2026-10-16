@@ -46,6 +46,9 @@ export const labels = {
   github: "GitHub",
   linkedin: "LinkedIn",
   backToTop: "Back to top",
+  notFoundTitle: "Page not found",
+  notFoundBody: "This page doesn't exist in this universe.",
+  backHome: "Back to home",
 };
 
 export const education = [
