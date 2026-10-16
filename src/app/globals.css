@@ -16,12 +16,27 @@
   --color-hulk: #4ade80;
   --color-cap: #3b6fe0;
 
-  --font-display: var(--font-anton), Impact, "Arial Narrow Bold", sans-serif;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-
   --animate-drift: drift 22s ease-in-out infinite alternate;
   --animate-drift-slow: drift 30s ease-in-out infinite alternate-reverse;
+  --animate-spin-slow: orbit 28s linear infinite;
+  --animate-spin-reverse: orbit 18s linear infinite reverse;
+  --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
+
+  @keyframes orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 0.65;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
 
   @keyframes drift {
     0% {
@@ -31,6 +46,16 @@
       transform: translate3d(6%, 5%, 0) scale(1.15);
     }
   }
+}
+
+/* Fonts come from next/font variables set on <html> in layout.tsx. */
+@theme inline {
+  --font-display: var(--font-barlow), "Arial Narrow", sans-serif;
+  --font-name: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 :root {
@@ -45,7 +70,10 @@ html {
 body {
   background: var(--color-ink);
   color: var(--color-text);
-  font-family: var(--font-sans);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
   overflow-x: clip;
 }
 
@@ -64,6 +92,12 @@ section[id] {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Elements Framer Motion hides for an entrance animation show their final state at once. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   *,
   ::before,
   ::after {

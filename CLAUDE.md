@@ -7,6 +7,12 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
 - Professional first, Avengers touch second. The site is for internship applications: name, college, department, CGPA and projects must read clearly within the first screen.
 - Each section has one hero accent: Hero (Iron Man, gold/red), Skills (Thor, arc blue), Projects (Hulk and Black Panther, green/purple), Leadership (Captain America, red/blue), Contact (Doctor Strange, purple/gold).
 - Heroes appear only as small CSS/SVG emblems (arc reactor, lightning, fist/ring, shield, portal), marked `aria-hidden`. One signature interaction per section, kept subtle.
+- Typography (next/font, mapped in `globals.css` `@theme inline`):
+  - `font-display`: Barlow Condensed 700. Section titles and short labels only, never paragraphs.
+  - `font-name`: Montserrat 800. The hero name only.
+  - `font-heading`: Space Grotesk 600. Project and card titles.
+  - `font-sans`: Inter (variable). Body and UI text, at least 16px with line-height about 1.6.
+  - `font-mono`: JetBrains Mono 400. Contact details (email, phone, links).
 - Section backgrounds are CSS gradients by default; an abstract video loop is used only if its file exists in `public/videos/`.
 
 ## Content rules

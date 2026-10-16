@@ -23,6 +23,18 @@ export const sections = [
 
 export type SectionId = (typeof sections)[number]["id"];
 
+/** Interface wording: buttons, small headings and screen-reader labels. */
+export const labels = {
+  cgpa: "CGPA",
+  coreSkills: "Core skills",
+  education: "Education",
+  snap: "Snap",
+  snapRestoring: "Restoring...",
+  snapHint: "Half the cards vanish. They come back in 4 seconds.",
+  viewProjects: "View Projects",
+  downloadResume: "Download Resume",
+};
+
 export const education = [
   {
     degree: "B.E. Computer Science and Engineering",

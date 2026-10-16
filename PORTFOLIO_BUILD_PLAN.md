@@ -9,6 +9,8 @@ Build plan for Vijaya Sarvajith K's portfolio. The standing rules live in `CLAUD
 - **Hero content:** name, college, department, title, summary, CGPA. `profile.college` and `profile.department` were added from the resume.
 - **Statuses:** NearMart and Schedulix confirmed "Complete" by the owner.
 - **Links:** repo URLs taken from the local Git remotes. Smart Farming Agent is the FarmEase repo.
+- **Typography (owner's choice):** Barlow Condensed 700 for section titles, Montserrat 800 for the name, Space Grotesk 600 for project titles, Inter for body text (variable font so true medium and semibold weights load), JetBrains Mono for contact details. This replaces Impact/Anton.
+- **UI labels** (button and label text such as "Snap" or "Download Resume") live in `labels` in `portfolio.ts`, so no text is hardcoded in components.
 - **The resume is the source of truth** when the data file and the resume disagree.
 
 ## Section map
@@ -26,7 +28,7 @@ Build plan for Vijaya Sarvajith K's portfolio. The standing rules live in `CLAUD
 Every phase ends with `npm run lint`, `npm run build`, a commit, and a stop for review.
 
 0. **Scaffold:** create-next-app (TS, Tailwind v4, ESLint, App Router, src dir), framer-motion and lenis, CLAUDE.md, the data file, this plan.
-1. **Foundation:** theme tokens in `globals.css` (`@theme`); Anton display font plus the system body font; metadata; Lenis provider (off under reduced motion); Navbar with a mobile menu under 768px; `VideoBackground` (WebM and MP4, poster, overlay, pauses offscreen, poster only under reduced motion); `ui/` SectionTitle, Card, Chip, Timeline; five placeholder sections; `page.tsx`.
+1. **Foundation:** theme tokens in `globals.css` (`@theme`); display font plus body font; metadata; Lenis provider (off under reduced motion); Navbar with a mobile menu under 768px; `VideoBackground` (WebM and MP4, poster, overlay, pauses offscreen, poster only under reduced motion); `ui/` SectionTitle, Card, Chip, Timeline; five placeholder sections; `page.tsx`.
 2. **Hero (Iron Man).**
 3. **Skills (Thor).**
 4. **Projects (Hulk and Black Panther):** a status of exactly "Complete" is green and every other status is gold. The filter has All / Complete / In progress, where "In progress" means every status other than "Complete".

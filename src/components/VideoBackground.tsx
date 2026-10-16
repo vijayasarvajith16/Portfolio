@@ -1,5 +1,4 @@
-import fs from "node:fs";
-import path from "node:path";
+import { publicFileExists } from "@/lib/files";
 import BackgroundVideo from "./BackgroundVideo";
 
 type Props = {
@@ -11,8 +10,6 @@ type Props = {
   glow: [string, string];
 };
 
-const inPublic = (file: string) => fs.existsSync(path.join(process.cwd(), "public", file));
-
 /**
  * Section background: a slow animated gradient, plus an abstract video loop when
  * `<src>.webm` or `<src>.mp4` exists in public/. A dark overlay keeps text readable.
@@ -21,8 +18,8 @@ export default function VideoBackground({ src, poster, glow }: Props) {
   const sources = [
     { src: `${src}.webm`, type: "video/webm" },
     { src: `${src}.mp4`, type: "video/mp4" },
-  ].filter((s) => inPublic(s.src));
-  const posterSrc = inPublic(poster) ? poster : undefined;
+  ].filter((s) => publicFileExists(s.src));
+  const posterSrc = publicFileExists(poster) ? poster : undefined;
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
