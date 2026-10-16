@@ -17,7 +17,7 @@ const body = Inter({ subsets: ["latin"], variable: "--font-inter" });
 // Contact details (not preloaded: it is only used far below the fold)
 const mono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["400", "600"],
   variable: "--font-jetbrains",
   preload: false,
 });

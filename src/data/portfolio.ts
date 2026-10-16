@@ -1,6 +1,6 @@
 export const profile = {
   name: "Vijaya Sarvajith K",
-  title: "Software Developer in the making",
+  title: "Upcoming Summer Intern@NatWest Groups",
   summary:
     "A motivated Computer Science student building full-stack, RAG and microservices systems.",
   college: "College of Engineering, Guindy (Anna University)",

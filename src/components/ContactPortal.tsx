@@ -85,13 +85,13 @@ export default function ContactPortal({ links, art, resume, labels }: Props) {
 
   return (
     <div ref={scope}>
-      <div className="relative lg:py-6">
-        {/* The portal: centred between the two columns on desktop, above the list on mobile. */}
+      <div className="relative xl:py-6">
+        {/* The portal: centred between the two columns on wide screens, above the list otherwise. */}
         <div
           data-portal
           data-reveal
           aria-hidden
-          className="pointer-events-none relative mx-auto mb-8 size-64 opacity-0 mix-blend-screen sm:size-72 lg:absolute lg:left-1/2 lg:top-1/2 lg:mb-0 lg:-ml-[170px] lg:-mt-[170px] lg:size-[340px]"
+          className="pointer-events-none relative mx-auto mb-8 size-64 opacity-0 mix-blend-screen sm:size-72 xl:absolute xl:left-1/2 xl:top-1/2 xl:mb-0 xl:-ml-[170px] xl:-mt-[170px] xl:size-[340px]"
         >
           <MysticSigil className="absolute -inset-[16%] opacity-80" />
           {MOTES.map((m, i) => (
@@ -128,7 +128,7 @@ export default function ContactPortal({ links, art, resume, labels }: Props) {
 
         <ul
           aria-label={labels.list}
-          className="relative grid gap-3 lg:min-h-[340px] lg:grid-cols-2 lg:content-center lg:gap-x-[400px] lg:gap-y-8"
+          className="relative grid gap-3 lg:grid-cols-2 lg:gap-4 xl:min-h-[340px] xl:content-center xl:gap-x-[340px] xl:gap-y-8"
         >
           {links.map((link, i) => (
             <li key={link.key} data-emerge data-reveal className="opacity-0">
@@ -136,7 +136,7 @@ export default function ContactPortal({ links, art, resume, labels }: Props) {
                 style={{ animationDelay: `${i * -1.5}s` }}
                 href={link.href}
                 {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-line bg-surface/80 p-4 backdrop-blur-sm transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-gold/70 focus-visible:border-gold/70 motion-safe:animate-float"
+                className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-gold/45 bg-ink/90 p-4 shadow-[0_0_28px_rgb(240_180_41/0.14)] transition-[translate,border-color] duration-300 hover:-translate-y-0.5 hover:border-gold focus-visible:border-gold motion-safe:animate-float sm:p-5"
               >
                 <span
                   aria-hidden
@@ -148,15 +148,15 @@ export default function ContactPortal({ links, art, resume, labels }: Props) {
                 />
                 <span
                   aria-hidden
-                  className="relative grid size-11 shrink-0 place-items-center rounded-xl border border-gold/40 bg-ink/60 p-2.5 text-gold"
+                  className="relative grid size-10 shrink-0 place-items-center rounded-xl border border-gold/60 bg-gold/10 p-2 text-gold sm:size-12 sm:p-2.5"
                 >
                   {link.icon}
                 </span>
                 <span className="relative min-w-0">
-                  <span className="block text-xs font-semibold uppercase tracking-widest text-muted">
-                    {link.label}
+                  <span className="block text-xs font-bold uppercase tracking-widest text-gold">{link.label}</span>
+                  <span className="mt-0.5 block font-mono text-[clamp(12px,3.7vw,14px)] font-semibold text-white [overflow-wrap:anywhere] sm:text-base">
+                    {link.value}
                   </span>
-                  <span className="block break-all font-mono text-sm text-text">{link.value}</span>
                   {link.external && <span className="sr-only"> ({labels.opensInNewTab})</span>}
                 </span>
               </a>

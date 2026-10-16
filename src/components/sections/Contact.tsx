@@ -3,6 +3,7 @@ import { publicFileExists, resumeFileName } from "@/lib/files";
 import { sectionMeta } from "@/lib/sections";
 import SectionShell from "../SectionShell";
 import ContactPortal from "../ContactPortal";
+import GoldParticles from "../GoldParticles";
 import SparkCanvas from "../SparkCanvas";
 import SectionTitle from "../ui/SectionTitle";
 
@@ -58,6 +59,7 @@ export default function Contact() {
   return (
     <>
       <SectionShell id="contact" labelledBy="contact-title">
+        <GoldParticles />
         <SectionTitle id="contact-title" title={label} accent={accent} />
         <ContactPortal
           links={links.map((link) => ({ ...link, icon: icons[link.key] }))}

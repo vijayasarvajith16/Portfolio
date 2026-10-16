@@ -4,7 +4,6 @@ import CaptainPanel from "../CaptainPanel";
 import SectionShell from "../SectionShell";
 import Shield from "../emblems/Shield";
 import Reveal from "../motion/Reveal";
-import Card from "../ui/Card";
 import Chip from "../ui/Chip";
 import SectionTitle from "../ui/SectionTitle";
 import Timeline from "../ui/Timeline";
@@ -27,18 +26,14 @@ export default function Leadership() {
           <Timeline items={roles} accent={accent} accentEnd="var(--color-cap)" />
 
           <Reveal inView delay={0.2} className="mt-12">
-            <Card>
-              <h3 className="font-display text-2xl uppercase tracking-wider text-text">
-                {labels.softSkills}
-              </h3>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {softSkills.map((skill) => (
-                  <li key={skill}>
-                    <Chip accent="var(--color-cap)">{skill}</Chip>
-                  </li>
-                ))}
-              </ul>
-            </Card>
+            <h3 className="font-display text-2xl uppercase tracking-wider text-text">{labels.softSkills}</h3>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {softSkills.map((skill) => (
+                <li key={skill}>
+                  <Chip accent="var(--color-cap)">{skill}</Chip>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
 
