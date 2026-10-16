@@ -89,8 +89,7 @@ export default function Hero() {
           items={education}
           labels={{
             heading: labels.education,
-            snap: labels.snap,
-            restoring: labels.snapRestoring,
+            snapCard: labels.snapCard,
             hint: labels.snapHint,
           }}
         />

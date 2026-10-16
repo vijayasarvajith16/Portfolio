@@ -2,8 +2,6 @@ import { labels, media, projects } from "@/data/portfolio";
 import { sectionMeta } from "@/lib/sections";
 import ProjectGrid from "../ProjectGrid";
 import SectionShell from "../SectionShell";
-import HulkFist from "../emblems/HulkFist";
-import PantherRing from "../emblems/PantherRing";
 import SectionTitle from "../ui/SectionTitle";
 
 export default function Projects() {
@@ -11,10 +9,7 @@ export default function Projects() {
 
   return (
     <SectionShell id="projects" labelledBy="projects-title" image={media.projects.src}>
-      <div className="flex items-start justify-between gap-6">
-        <SectionTitle id="projects-title" title={label} accent={accent} emblem={<HulkFist />} />
-        <PantherRing className="mt-1 size-12 sm:size-14" />
-      </div>
+      <SectionTitle id="projects-title" title={label} accent={accent} />
       <ProjectGrid
         projects={projects}
         labels={{

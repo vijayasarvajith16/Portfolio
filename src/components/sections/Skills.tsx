@@ -1,6 +1,7 @@
 import { media, skillGroups } from "@/data/portfolio";
 import { sectionMeta } from "@/lib/sections";
 import SectionShell from "../SectionShell";
+import LightningCanvas from "../LightningCanvas";
 import SkillGrid from "../SkillGrid";
 import SkillsOrbit from "../SkillsOrbit";
 import LightningBolt from "../emblems/LightningBolt";
@@ -30,6 +31,7 @@ export default function Skills() {
       <SectionTitle id="skills-title" title={label} accent={accent} emblem={<LightningBolt />} />
       <SkillsOrbit rings={rings} art={media.skills} />
       <SkillGrid groups={skillGroups} />
+      <LightningCanvas />
     </SectionShell>
   );
 }

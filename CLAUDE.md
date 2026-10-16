@@ -6,7 +6,7 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
 ## Design direction
 - Professional first, Avengers touch second. The site is for internship applications: name, college, department, CGPA and projects must read clearly within the first screen.
 - Each section has one hero accent: Hero (Iron Man, gold/red), Skills (Thor, arc blue), Projects (Hulk and Black Panther, green/purple), Leadership (Captain America, red/blue), Contact (Doctor Strange, purple/gold).
-- Heroes appear as small CSS/SVG emblems (arc reactor, lightning, fist/ring, shield, portal), marked `aria-hidden`. One signature interaction per section, kept subtle.
+- Heroes appear as small CSS/SVG emblems (arc reactor, lightning, shield, portal), marked `aria-hidden`. Projects has no emblem (owner removed the fist and claw icons). One signature interaction per section, kept subtle.
 - Exception (owner's decision, 2026-10-16): owner-supplied art in `public/images/`, with paths in `media` in portfolio.ts:
   - Hero: `Arc Reactor.jpeg`, the right-hand visual on desktop (soft oval fade) and a dim background on mobile.
   - Skills: `Thor.jpeg`, as a 3D skill orbit around it plus a blurred parallax background.
@@ -20,6 +20,7 @@ Next.js (App Router, TypeScript), Tailwind CSS, Framer Motion, Lenis.
   - `font-sans`: Inter (variable). Body and UI text, at least 16px with line-height about 1.6.
   - `font-mono`: JetBrains Mono 400. Contact details (email, phone, links).
 - Tech logos come from `simple-icons` (CC0) via `TechIcon` in `src/lib/techIcons.tsx`; pass `tech` to `Chip`. Technologies without a logo get a line icon there. Add new tech names to that file.
+- Skills: lightning crackles from the cursor (`LightningCanvas`). Education: clicking a card snaps it to dust; it returns after 4 s.
 - Project cards play a Black Panther "kinetic charge" (edge beam, vibranium mesh, shockwave) before growing into the details dialog; skipped under reduced motion.
 - Section backgrounds are CSS gradients by default; an abstract video loop is used only if its file exists in `public/videos/`.
 
